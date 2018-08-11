@@ -1,11 +1,9 @@
 package com.demo.controller;
 
-import com.demo.common.Const;
 import com.demo.common.ServerResponse;
 import com.demo.pojo.User;
 import com.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +18,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/user/")
-public class UserController {
+public class UserController extends BaseController{
 
 
     @Autowired
@@ -33,7 +31,7 @@ public class UserController {
         ServerResponse<User> response = userService.login(username, password);
         System.out.println("8090");
         if (response.isSuccess()) {
-            session.setAttribute(Const.CURRENT_USER, response.getData());
+            session.setAttribute(CURRENT_USER, response.getData());
         }
         return response;
     }
@@ -41,14 +39,14 @@ public class UserController {
     @RequestMapping(value = "logout.do", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<String> logout(HttpSession session, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        session.removeAttribute(Const.CURRENT_USER);
+        session.removeAttribute(CURRENT_USER);
         return ServerResponse.createBySuccess();
     }
 
     @RequestMapping(value = "getUserInfo.do", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session, HttpServletRequest httpServletRequest) {
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        User user = (User)session.getAttribute(CURRENT_USER);
         if(user != null){
             return ServerResponse.createBySuccess(user);
         }
