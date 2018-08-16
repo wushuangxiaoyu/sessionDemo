@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by geely
+ * 基类
+ * Created by  Yu  by  2017/9/20
  */
 @Controller
 @RequestMapping("/user/")
